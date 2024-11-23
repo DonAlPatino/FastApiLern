@@ -1,7 +1,7 @@
 from enum import Enum
 from pydantic import BaseModel, EmailStr, Field, field_validator, ValidationError
 from datetime import date, datetime
-from typing import Optional
+from typing import Optional, Any
 import re
 
 
@@ -12,9 +12,11 @@ class Major(str, Enum):
     medicine = "Медицина"
     engineering = "Инженерия"
     languages = "Языки"
+    mathematics = "Математика"
+    biology = "Биология"
 
 
-class Student(BaseModel):
+class SStudent(BaseModel):
     student_id: int
     phone_number: str = Field(default=..., description="Номер телефона в международном формате, начинающийся с '+'")
     first_name: str = Field(default=..., min_length=1, max_length=50, description="Имя студента, от 1 до 50 символов")
@@ -33,7 +35,8 @@ class Student(BaseModel):
     @field_validator("phone_number")
     @classmethod
     def validate_phone_number(cls, values: str) -> str:
-        if not re.match(r'^\+\d{1,15}$', values):
+        # if not re.match(r'^\+\d{1,15}$', values):
+        if not re.match('^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$', values):
             raise ValueError('Номер телефона должен начинаться с "+" и содержать от 1 до 15 цифр')
         return values
 
@@ -43,3 +46,17 @@ class Student(BaseModel):
         if values and values >= datetime.now().date():
             raise ValueError('Дата рождения должна быть в прошлом')
         return values
+
+
+class SUpdateFilter(BaseModel):
+    student_id: int
+
+
+# Определение модели для новых данных студента
+class SStudentUpdate(BaseModel):
+    course: int = Field(..., ge=1, le=5, description="Курс должен быть в диапазоне от 1 до 5")
+    major: Optional[Major] = Field(..., description="Специальность студента")
+
+class SDeleteFilter(BaseModel):
+    key: str
+    value: Any
