@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Depends, HTTPException
 
 from app.jsondb import add_student, upd_student, dell_student
-from app.schemas import SStudent, SUpdateFilter, SStudentUpdate, SDeleteFilter
-from app.rb import RBStudent
+from app.students.schemas import SStudent, SUpdateFilter, SStudentUpdate, SDeleteFilter
+from app.students.rb import RBStudent
 from app.utils import json_to_dict_list
 import os
 from typing import Optional, List

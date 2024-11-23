@@ -4,7 +4,7 @@ from pydantic import ValidationError
 
 sys.path[0] += '\\..'
 
-from app.schemas import SStudent
+from app.students.schemas import SStudent
 
 student_data = {
     "student_id": 1,
