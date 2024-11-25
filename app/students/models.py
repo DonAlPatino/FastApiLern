@@ -1,7 +1,7 @@
 from sqlalchemy import ForeignKey, text, Text
 from sqlalchemy.orm import relationship, Mapped, mapped_column
-from app.database import Base, str_uniq, int_pk, str_null_true
 from datetime import date
+from app.dao.base import Base, int_pk, str_uniq, str_null_true
 
 
 # создаем модель таблицы студентов
