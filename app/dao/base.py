@@ -1,24 +1,13 @@
-from datetime import datetime
-from typing import Annotated
-
-from sqlalchemy import func
-from sqlalchemy.ext.asyncio import AsyncAttrs
-from sqlalchemy.orm import DeclarativeBase, declared_attr, mapped_column, Mapped
-
-# настройка аннотаций
-int_pk = Annotated[int, mapped_column(primary_key=True)]
-created_at = Annotated[datetime, mapped_column(server_default=func.now())]
-updated_at = Annotated[datetime, mapped_column(server_default=func.now(), onupdate=datetime.now)]
-str_uniq = Annotated[str, mapped_column(unique=True, nullable=False)]
-str_null_true = Annotated[str, mapped_column(nullable=True)]
+from sqlalchemy.future import select
+from app.database import async_session_maker
 
 
-class Base(AsyncAttrs, DeclarativeBase):
-    __abstract__ = True
+class BaseDAO:
+    model = None
 
-    @declared_attr.directive
-    def __tablename__(cls) -> str:
-        return f"{cls.__name__.lower()}s"
-
-    created_at: Mapped[created_at]
-    updated_at: Mapped[updated_at]
+    @classmethod
+    async def find_all(cls, **filter_by):
+        async with async_session_maker() as session:
+            query = select(cls.model).filter_by(**filter_by)
+            result = await session.execute(query)
+            return result.scalars().all()

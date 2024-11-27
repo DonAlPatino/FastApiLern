@@ -14,7 +14,8 @@ sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 print(sys.path)
 # sys.path[0] += '\\..'
 
-from app.database import DATABASE_URL, Base
+from app.database import DATABASE_URL
+from app.database import Base
 from app.students.models import Student, Major
 
 # this is the Alembic Config object, which provides
