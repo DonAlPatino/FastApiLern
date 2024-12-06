@@ -18,6 +18,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 
+# В токе пихаем ID из таблицы Users
 def create_access_token(data: dict) -> str:
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + timedelta(days=30)
@@ -25,6 +26,7 @@ def create_access_token(data: dict) -> str:
     auth_data = get_auth_data()
     encode_jwt = jwt.encode(to_encode, auth_data['secret_key'], algorithm=auth_data['algorithm'])
     return encode_jwt
+
 
 async def authenticate_user(email: EmailStr, password: str):
     user = await UsersDAO.find_one_or_none(email=email)
