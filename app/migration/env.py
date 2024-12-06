@@ -18,6 +18,7 @@ from app.database import DATABASE_URL
 from app.database import Base
 from app.students.models import Student
 from app.majors.models import Major
+from app.users.models import User
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

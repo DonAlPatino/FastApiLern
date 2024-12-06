@@ -4,6 +4,7 @@ from app.jsondb import add_student, upd_student, dell_student
 from app.students.schemas import SStudent, SUpdateFilter, SStudentUpdate, SDeleteFilter
 from app.students.router import router as router_students
 from app.majors.router import router as router_majors
+from app.users.router import router as router_users
 
 app = FastAPI()
 
@@ -13,6 +14,7 @@ def home_page():
     return {"message": "Привет, Хабр!"}
 
 
+app.include_router(router_users)
 app.include_router(router_students)
 app.include_router(router_majors)
 
@@ -33,7 +35,6 @@ def update_student_handler(filter_student: SUpdateFilter, new_data: SStudentUpda
         return {"message": "Информация о студенте успешно обновлена!"}
     else:
         raise HTTPException(status_code=400, detail="Ошибка при обновлении информации о студенте")
-
 
 # @app.post("/add_student")
 # def add_student_handler(student: SStudent):
