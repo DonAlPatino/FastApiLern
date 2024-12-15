@@ -31,11 +31,12 @@ class SStudent(BaseModel):
                          description="Адрес студента, не более 200 символов")
     enrollment_year: int = Field(default=..., ge=2002, description="Год поступления должен быть не меньше 2002")
     # major: Major = Field(default=..., description="Специальность студента")
-    # major: Optional[str] = Field(..., description="Название факультета")
-    major: SMajor
+    major: Optional[str] = Field(..., description="Название факультета")
+    # major: SMajor
     course: int = Field(..., ge=1, le=5, description="Курс должен быть в диапазоне от 1 до 5")
     special_notes: Optional[str] = Field(default=None, max_length=500,
                                          description="Дополнительные заметки, не более 500 символов")
+    photo: Optional[str] = Field(None, max_length=100, description="Фото студента")
 
     @field_validator("phone_number")
     @classmethod
@@ -82,6 +83,7 @@ class SStudentAdd(BaseModel):
             raise ValueError('Дата рождения должна быть в прошлом')
         return values
 
+
 class SUpdateFilter(BaseModel):
     student_id: int
 
@@ -89,8 +91,9 @@ class SUpdateFilter(BaseModel):
 # Определение модели для новых данных студента
 class SStudentUpdate(BaseModel):
     course: int = Field(..., ge=1, le=5, description="Курс должен быть в диапазоне от 1 до 5")
-    #major: Optional[Major] = Field(..., description="Специальность студента")
+    # major: Optional[Major] = Field(..., description="Специальность студента")
     major: SMajor
+
 
 class SDeleteFilter(BaseModel):
     key: str

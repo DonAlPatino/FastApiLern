@@ -11,7 +11,7 @@ async def get_all_students(request_body: RBStudent = Depends()) -> list[SStudent
     return await StudentDAO.find_all(**request_body.to_dict())
 
 
-@router.get("/{id}", summary="Получить одного студента по id")
+@router.get("/{student_id}", summary="Получить одного студента по id")
 async def get_student_by_id(student_id: int) -> SStudent | dict:
     # Поиск без связанной таблицы Major - падает если пытаться подтянуть ее в схему
     # rez = await StudentDAO.find_one_or_none_by_id(student_id)

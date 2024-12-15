@@ -3,6 +3,7 @@ class RBStudent:
                  course: int | None = None,
                  major_id: int | None = None,
                  enrollment_year: int | None = None):
+        print(student_id)
         self.id = student_id
         self.course = course
         self.major_id = major_id

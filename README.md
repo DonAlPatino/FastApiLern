@@ -1,6 +1,6 @@
 "# FastApiLern" 
 
-https://habr.com/ru/companies/amvera/articles/826196/
+https://habr.com/ru/articles/831386/
 
 uvicorn app.main:app --reload
 
